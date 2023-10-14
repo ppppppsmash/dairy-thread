@@ -1,0 +1,6 @@
+__pycache__/
+*.log
+*.pyc
+db-volumns/
+db_sqlites
+db.sqlite3

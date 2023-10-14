@@ -15,3 +15,9 @@ django-admin startproject dairy_thread
 cd dairy_thread
 
 python manage.py startapp accounts
+
+## make a migration file
+python manage.py makemigrations accounts
+
+## migrate the db table with the migration file
+python manage.py migrate
