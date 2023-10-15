@@ -7,7 +7,16 @@
 
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="{% url 'accounts:home' %}">accounts</a>
+      <a class="navbar-brand" href="{% url 'accounts:home' %}">
+        ホーム
+      </a>
+
+      {% if user.is_authenticated %}
+      {% else %}
+      <a class="navbar-brand" href="{% url 'accounts:regist' %}">
+        ユーザ登録
+      </a>
+      {% endif %}
     </nav>
     {% block content %}
     {% endblock %}
