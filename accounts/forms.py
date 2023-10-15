@@ -1,5 +1,6 @@
 from django import forms
 from .models import Users
+from django.contrib.auth.password_validation import validate_password
 
 class RegistForm(forms.ModelForm):
   username = forms.CharField(label='名前')
@@ -18,3 +19,10 @@ class RegistForm(forms.ModelForm):
     confirm_password = cleaned_data['confirm_password']
     if password != confirm_password:
       raise forms.ValidationError('パスワードが異なる')
+    
+  def save(self, commit=False):
+    user = super().save(commit=False)
+    validate_password(self.cleaned_data['password', user])
+    user.set_password(self.cleaned_data['password'])
+    user.save()
+    return user
