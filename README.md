@@ -21,3 +21,15 @@ python manage.py makemigrations accounts
 
 ## migrate the db table with the migration file
 python manage.py migrate
+
+
+### sqlite3
+sqlite3 db.sqlite3
+
+.table
+
+select * from {table};
+
+.schema
+
+.quit

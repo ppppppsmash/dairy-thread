@@ -4,3 +4,4 @@ __pycache__/
 db-volumns/
 db_sqlites
 db.sqlite3
+*/migrations/
