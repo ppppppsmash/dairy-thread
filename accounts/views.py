@@ -8,7 +8,7 @@ def home(request):
   )
 
 def regist(request):
-  regist_form = forms.RegistForm(request.POST)
+  regist_form = forms.RegistForm(request.POST or None)
   
   if regist_form.is_valid():
     try:
