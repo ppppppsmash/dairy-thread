@@ -3,6 +3,10 @@ from django.contrib.auth.models import (
   AbstractBaseUser,
   PermissionsMixin
 )
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from uuid import uuid4
+from datetime import datetime, timedelta
 
 class Users(AbstractBaseUser, PermissionsMixin):
   username = models.CharField(max_length=255)
@@ -27,3 +31,14 @@ class UserActivateTokens(models.Model):
 
   class Meta:
     db_table = 'user_activate_tokens'
+
+@receiver(post_save, sender=Users)
+def publish_token(sender, instance, **kwargs):
+  user_activate_token = UserActivateTokens.objects.create(
+    user = instance,
+    token = str(uuid4()),
+    expired_at = datetime.now() + timedelta(days=1)
+  )
+  # メールでURLを送る方が良い（ユーザを有効化）
+  print(f'http://127.0.0.1:8000/accounts/activate_user/{user_activate_token.token}')
+  # ↑ http://127.0.0.1:8000/accounts/activate_user/9955379a-7e76-440e-a81f-022378ef4072
