@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 from .models import UserActivateTokens
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 def home(request):
   return render(
@@ -54,3 +55,8 @@ def user_login(request):
     }
   )
 
+@login_required
+def user_logout(request):
+  logout(request)
+  messages.success(request, 'ログアウトしました')
+  return redirect('accounts:home')
