@@ -26,3 +26,7 @@ class RegistForm(forms.ModelForm):
     user.set_password(self.cleaned_data['password'])
     user.save()
     return
+
+class LoginForm(forms.Form):
+  email = forms.CharField(label="メールアドレス")
+  password = forms.CharField(label="パスワード")
