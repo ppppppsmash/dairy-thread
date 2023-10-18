@@ -22,12 +22,24 @@ class Users(AbstractBaseUser, PermissionsMixin):
   class Meta:
     db_table = 'users'
 
+class UserActivateTokensManager(models.Manager):
+  def activate_user_by_token(self, token):
+    user_activate_token = self.filter(
+      token=token,
+      expired_at__gte=datetime.now()
+    ).first()
+    user = user_activate_token.user
+    user.is_active = True
+    user.save()
+
 class UserActivateTokens(models.Model):
   token = models.UUIDField(db_index=True)
   expired_at = models.DateTimeField()
   user = models.ForeignKey(
     'Users', on_delete=models.CASCADE
   )
+
+  objects = UserActivateTokensManager()
 
   class Meta:
     db_table = 'user_activate_tokens'
